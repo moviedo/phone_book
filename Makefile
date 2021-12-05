@@ -33,7 +33,7 @@ new_project:
 	-v "/$$(pwd)":/app \
 	-w /app \
 	elixir:1.12-alpine \
-	sh -c "mix local.hex --force && mix archive.install hex phx_new --force && mix phx.new ${APP} --install --no-html --no-assets"
+	sh -c "mix local.hex --force && mix archive.install hex phx_new --force && mix phx.new ${APP} --install"
 
 ## project release and tag using conventional commit
 release:
@@ -41,7 +41,7 @@ release:
 
 ## restart web container so phoenix server can rebuild/restart
 restart:
-	@docker container restart web
+	@docker-compose restart web
 
 ## start docker-compose containers
 start_docker:
