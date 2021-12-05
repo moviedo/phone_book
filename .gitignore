@@ -1,5 +1,6 @@
 # Ignore package tarball (built via "mix hex.build").
 phone_book-*.tar
+priv/vue_app
 
 
 

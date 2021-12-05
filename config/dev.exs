@@ -22,7 +22,16 @@ config :phone_book, PhoneBookWeb.Endpoint,
   secret_key_base: "DUhb+FERO8UANybZ1lG3jFJtFH7sulBITi/XjYFly/qNbqTudFBSYXa+psp5z+mb",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    node: [
+      "node_modules/webpack/bin/webpack.js",
+      "--mode",
+      "development",
+      "--watch-options-stdin",
+      "--config",
+      "node_modules/@vue/cli-service/webpack.config.js",
+      cd: Path.expand("../vue_app", __DIR__)
+    ]
   ]
 
 # ## SSL Support
