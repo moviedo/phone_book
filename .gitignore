@@ -2,8 +2,9 @@
 phone_book-*.tar
 
 
-# Created by https://www.toptal.com/developers/gitignore/api/linux,macos,elixir,windows,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,elixir,windows,node
+
+# Created by https://www.toptal.com/developers/gitignore/api/node,linux,macos,elixir,windows,phoenix
+# Edit at https://www.toptal.com/developers/gitignore?templates=node,linux,macos,elixir,windows,phoenix
 
 ### Elixir ###
 /_build
@@ -193,6 +194,30 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+### Phoenix ###
+# gitignore template for Phoenix projects
+# website: http://www.phoenixframework.org/
+#
+# Recommended template: Elixir.gitignore
+
+# Temporary files
+/tmp
+
+# Static artifacts
+/node_modules
+/assets/node_modules
+
+# Since we are building assets from web/static,
+# we ignore priv/static. You may want to comment
+# this depending on your deployment strategy.
+/priv/static/assets/
+
+# Installer-related files
+/installer/_build
+/installer/tmp
+/installer/doc
+/installer/deps
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -219,4 +244,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/linux,macos,elixir,windows,node
+# End of https://www.toptal.com/developers/gitignore/api/node,linux,macos,elixir,windows,phoenix
