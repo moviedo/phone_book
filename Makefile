@@ -33,7 +33,7 @@ new_project:
 	-v "/$$(pwd)":/app \
 	-w /app \
 	elixir:1.12-alpine \
-	sh -c "mix local.hex --force && mix archive.install hex phx_new --force && mix phx.new ${APP} --install"
+	sh -c "mix local.hex --force && mix archive.install hex phx_new --force && mix phx.new ${APP} --install --binary-id"
 
 ## project release and tag using conventional commit
 release:
