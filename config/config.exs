@@ -8,7 +8,8 @@
 import Config
 
 config :phone_book,
-  ecto_repos: [PhoneBook.Repo]
+  ecto_repos: [PhoneBook.Repo],
+  generators: [binary_id: true]
 
 # Configures the endpoint
 config :phone_book, PhoneBookWeb.Endpoint,
