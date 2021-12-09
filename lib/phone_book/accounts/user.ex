@@ -4,6 +4,7 @@ defmodule PhoneBook.Accounts.User do
   """
   use Ecto.Schema
   import Ecto.Changeset
+  alias PhoneBook.Contacts.Contact
 
   @min_password_length 8
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -13,6 +14,7 @@ defmodule PhoneBook.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    has_many :contacts, Contact
 
     timestamps()
   end
