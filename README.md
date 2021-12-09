@@ -88,3 +88,4 @@ Commit messages must be one of the following:
 
 Reference:
 1. [conventional commit config](https://hexdocs.pm/git_ops/readme.html#configuration)
+1. [vuejs integration](https://dev.to/mcraealex/setting-up-vue-and-phoenix-1-5-with-vue-cli-488c)
