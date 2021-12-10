@@ -135,6 +135,11 @@ defmodule PhoneBookWeb.UserAuthTest do
       assert get_flash(conn, :error) == "You must log in to access this page."
     end
 
+    test "return 401 unauthorized if API is not authenticated", %{conn: conn} do
+      conn = get(conn, Routes.contact_path(conn, :index))
+      assert json_response(conn, 401)["message"] == "Unauthorized"
+    end
+
     test "stores the path to redirect to on GET", %{conn: conn} do
       halted_conn =
         %{conn | path_info: ["foo"], query_string: ""}

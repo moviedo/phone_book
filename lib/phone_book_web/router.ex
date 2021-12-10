@@ -15,6 +15,15 @@ defmodule PhoneBookWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug :fetch_current_user
+  end
+
+  pipeline :api_auth_required do
+    plug :require_authenticated_user, api: true
   end
 
   scope "/", PhoneBookWeb do
@@ -23,10 +32,13 @@ defmodule PhoneBookWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", PhoneBookWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PhoneBookWeb do
+    pipe_through [:api, :api_auth_required]
+
+    resources "/contacts", ContactController, except: [:edit, :new, :show] do
+      resources "/phones", PhoneController, except: [:edit, :new, :show]
+    end
+  end
 
   # Enables LiveDashboard only for development
   #

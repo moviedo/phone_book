@@ -130,16 +130,33 @@ defmodule PhoneBookWeb.UserAuth do
 
   If you want to enforce the user email is confirmed before
   they use the application at all, here would be a good place.
+
+  ## Examples
+
+    iex> require_authenticated_user(conn)
+    html response 
+
+    iex> require_authenticated_user(conn, [api: true])
+    json response
+
   """
-  def require_authenticated_user(conn, _opts) do
-    if conn.assigns[:current_user] do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You must log in to access this page.")
-      |> maybe_store_return_to()
-      |> redirect(to: Routes.user_session_path(conn, :new))
-      |> halt()
+  def require_authenticated_user(conn, opts \\ []) do
+    cond do
+      conn.assigns[:current_user] ->
+        conn
+
+      {:api, true} in opts ->
+        conn
+        |> put_status(401)
+        |> json(%{"message" => "Unauthorized"})
+        |> halt()
+
+      true ->
+        conn
+        |> put_flash(:error, "You must log in to access this page.")
+        |> maybe_store_return_to()
+        |> redirect(to: Routes.user_session_path(conn, :new))
+        |> halt()
     end
   end
 
