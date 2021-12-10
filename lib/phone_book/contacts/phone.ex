@@ -5,6 +5,8 @@ defmodule PhoneBook.Contacts.Phone do
   use Ecto.Schema
   import Ecto.Changeset
 
+  require ExPhoneNumber
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "phones" do
@@ -20,5 +22,20 @@ defmodule PhoneBook.Contacts.Phone do
     phone
     |> cast(attrs, [:number, :label, :contact_id])
     |> validate_required([:number, :label, :contact_id])
+    |> validate_phone()
+  end
+
+  @doc """
+  Validates the current phone number otherwise adds an error to the changeset.
+  """
+  def validate_phone(changeset) do
+    number = get_field(changeset, :number)
+
+    with {:ok, phone_number} <- ExPhoneNumber.parse(number, nil),
+         true <- ExPhoneNumber.is_valid_number?(phone_number) do
+      changeset
+    else
+      _ -> add_error(changeset, :number, "has invalid formatting, should be E164 formatted")
+    end
   end
 end

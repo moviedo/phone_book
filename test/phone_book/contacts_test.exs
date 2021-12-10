@@ -100,6 +100,15 @@ defmodule PhoneBook.ContactsTest do
 
       assert {:error, %Ecto.Changeset{} = changeset} =
                Contacts.create_phone(%{
+                 number: "random",
+                 label: :mobile,
+                 contact_id: phone.contact_id
+               })
+
+      assert [number: _] = changeset.errors
+
+      assert {:error, %Ecto.Changeset{} = changeset} =
+               Contacts.create_phone(%{
                  number: "+13475156777",
                  label: "bad input",
                  contact_id: phone.contact_id
