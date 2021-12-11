@@ -167,4 +167,14 @@ defmodule PhoneBook.ContactsTest do
       assert %Ecto.Changeset{} = Contacts.change_phone(phone)
     end
   end
+
+  describe "contact with phone numbers" do
+    test "get_phone!/1 returns the phone with given id" do
+      phone = phone_fixture()
+      [contact] = Repo.all(from(c in Contact, where: c.id == ^phone.contact_id, preload: :phones))
+
+      assert Contacts.get_contact!(contact.id) == contact
+      assert contact.phones == [phone]
+    end
+  end
 end

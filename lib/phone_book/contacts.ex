@@ -18,7 +18,7 @@ defmodule PhoneBook.Contacts do
 
   """
   def list_contacts(user_id) do
-    Repo.all(from(c in Contact, where: c.user_id == ^user_id))
+    Repo.all(from(c in Contact, where: c.user_id == ^user_id, preload: :phones))
   end
 
   @doc """
@@ -29,13 +29,20 @@ defmodule PhoneBook.Contacts do
   ## Examples
 
       iex> get_contact!(123)
-      %Contact{}
+      %Contact{ 
+        name: "allen", 
+        user_id: some_uuid,
+        phones: []
+      }
 
       iex> get_contact!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_contact!(id), do: Repo.get!(Contact, id)
+  def get_contact!(id) do
+    query = from Contact, preload: :phones
+    Repo.get!(query, id)
+  end
 
   @doc """
   Creates a contact.
@@ -50,9 +57,9 @@ defmodule PhoneBook.Contacts do
 
   """
   def create_contact(attrs \\ %{}) do
-    %Contact{}
-    |> Contact.changeset(attrs)
-    |> Repo.insert()
+    with {:ok, contact} <- %Contact{} |> Contact.changeset(attrs) |> Repo.insert() do
+      {:ok, Repo.preload(contact, :phones)}
+    end
   end
 
   @doc """
@@ -68,9 +75,9 @@ defmodule PhoneBook.Contacts do
 
   """
   def update_contact(%Contact{} = contact, attrs) do
-    contact
-    |> Contact.changeset(attrs)
-    |> Repo.update()
+    with {:ok, contact} <- contact |> Contact.changeset(attrs) |> Repo.update() do
+      {:ok, Repo.preload(contact, :phones)}
+    end
   end
 
   @doc """
