@@ -72,7 +72,7 @@ defmodule PhoneBookWeb.ContactControllerTest do
       conn = post(conn, Routes.contact_path(conn, :create), contact: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      {:ok, phone} =
+      {:ok, %{id: phone_id, inserted_at: inserted_at, number: number}} =
         Contacts.create_phone(%{
           number: "+17182347788",
           label: :mobile,
@@ -81,11 +81,19 @@ defmodule PhoneBookWeb.ContactControllerTest do
 
       conn = get(conn, Routes.contact_path(conn, :show, id))
       name = @create_attrs.name
+      inserted_at = NaiveDateTime.to_iso8601(inserted_at)
 
       assert %{
-               "id" => id,
-               "name" => name,
-               "phones" => [phone]
+               "id" => ^id,
+               "name" => ^name,
+               "phones" => [
+                 %{
+                   "id" => ^phone_id,
+                   "inserted_at" => ^inserted_at,
+                   "label" => "mobile",
+                   "number" => ^number
+                 }
+               ]
              } = json_response(conn, 200)["data"]
     end
 
