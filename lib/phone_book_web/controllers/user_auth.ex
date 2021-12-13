@@ -1,6 +1,6 @@
 defmodule PhoneBookWeb.UserAuth do
   @moduledoc """
-  Helper module that implements reusable methods used in the different auth 
+  Helper module that implements reusable methods used in the different auth
   controllers (registration, session, reset password, etc).
   """
   import Plug.Conn
@@ -134,7 +134,7 @@ defmodule PhoneBookWeb.UserAuth do
   ## Examples
 
     iex> require_authenticated_user(conn)
-    html response 
+    html response
 
     iex> require_authenticated_user(conn, [api: true])
     json response
@@ -148,7 +148,9 @@ defmodule PhoneBookWeb.UserAuth do
       {:api, true} in opts ->
         conn
         |> put_status(401)
-        |> json(%{"message" => "Unauthorized"})
+        |> put_status(:unauthorized)
+        |> put_view(PhoneBookWeb.ErrorView)
+        |> render("401.json")
         |> halt()
 
       true ->

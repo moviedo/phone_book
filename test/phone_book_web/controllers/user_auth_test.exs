@@ -137,7 +137,7 @@ defmodule PhoneBookWeb.UserAuthTest do
 
     test "return 401 unauthorized if API is not authenticated", %{conn: conn} do
       conn = get(conn, Routes.contact_path(conn, :index))
-      assert json_response(conn, 401)["message"] == "Unauthorized"
+      assert json_response(conn, 401)["errors"] == ["Unauthorized"]
     end
 
     test "stores the path to redirect to on GET", %{conn: conn} do
