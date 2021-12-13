@@ -35,8 +35,8 @@ defmodule PhoneBookWeb.Router do
   scope "/api", PhoneBookWeb do
     pipe_through [:api, :api_auth_required]
 
-    resources "/contacts", ContactController, except: [:edit, :new, :show] do
-      resources "/phones", PhoneController, except: [:edit, :new, :show]
+    resources "/contacts", ContactController, except: [:edit, :new] do
+      resources "/phones", PhoneController, except: [:edit, :new]
     end
   end
 

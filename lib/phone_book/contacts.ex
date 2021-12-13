@@ -29,8 +29,8 @@ defmodule PhoneBook.Contacts do
   ## Examples
 
       iex> get_contact!(123)
-      %Contact{ 
-        name: "allen", 
+      %Contact{
+        name: "allen",
         user_id: some_uuid,
         phones: []
       }
