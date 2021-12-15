@@ -22,6 +22,7 @@ defmodule PhoneBook.Contacts.Phone do
     phone
     |> cast(attrs, [:number, :label, :contact_id])
     |> validate_required([:number, :label, :contact_id])
+    |> foreign_key_constraint(:contact_id)
     |> validate_phone()
   end
 

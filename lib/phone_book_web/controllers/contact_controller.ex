@@ -37,8 +37,8 @@ defmodule PhoneBookWeb.ContactController do
     user = conn.assigns.current_user
     contact = Contacts.get_contact!(id)
 
-    with {:ok, %Contact{} = contact} <- Contacts.update_contact(contact, contact_params),
-         true <- user.id == contact.user_id do
+    with true <- user.id == contact.user_id,
+         {:ok, %Contact{} = contact} <- Contacts.update_contact(contact, contact_params) do
       render(conn, "show.json", contact: contact)
     end
   end
@@ -47,8 +47,8 @@ defmodule PhoneBookWeb.ContactController do
     user = conn.assigns.current_user
     contact = Contacts.get_contact!(id)
 
-    with {:ok, %Contact{}} <- Contacts.delete_contact(contact),
-         true <- user.id == contact.user_id do
+    with true <- user.id == contact.user_id,
+         {:ok, %Contact{}} <- Contacts.delete_contact(contact) do
       send_resp(conn, :no_content, "")
     end
   end
