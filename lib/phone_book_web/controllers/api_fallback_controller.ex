@@ -23,10 +23,10 @@ defmodule PhoneBookWeb.ApiFallbackController do
   end
 
   # This clause handles authorization errors returned by users trying to access restricted resources
-  def call(conn, false) do
+  def call(conn, {:error, :unauthorized}) do
     conn
-    |> put_status(:unauthorized)
+    |> put_status(:not_found)
     |> put_view(PhoneBookWeb.ErrorView)
-    |> render("401.json")
+    |> render("403.json")
   end
 end

@@ -100,7 +100,7 @@ defmodule PhoneBookWeb.ContactControllerTest do
     test "renders authorization error when data is invalid", %{conn: conn} do
       contact = contact_fixture()
       conn = get(conn, Routes.contact_path(conn, :show, contact.id))
-      assert json_response(conn, 401)["errors"] == ["Unauthorized"]
+      assert json_response(conn, 404)["errors"] == ["Forbidden"]
     end
   end
 
@@ -126,7 +126,7 @@ defmodule PhoneBookWeb.ContactControllerTest do
     test "renders authorization error when data is invalid", %{conn: conn} do
       contact = contact_fixture()
       conn = put(conn, Routes.contact_path(conn, :update, contact), contact: @update_attrs)
-      assert json_response(conn, 401)["errors"] == ["Unauthorized"]
+      assert json_response(conn, 404)["errors"] == ["Forbidden"]
     end
   end
 
@@ -145,7 +145,7 @@ defmodule PhoneBookWeb.ContactControllerTest do
     test "renders authorization error when data is invalid", %{conn: conn} do
       contact = contact_fixture()
       conn = delete(conn, Routes.contact_path(conn, :delete, contact))
-      assert json_response(conn, 401)["errors"] == ["Unauthorized"]
+      assert json_response(conn, 404)["errors"] == ["Forbidden"]
     end
   end
 

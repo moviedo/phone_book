@@ -4,6 +4,8 @@ defmodule PhoneBookWeb.ContactController do
   alias PhoneBook.Contacts
   alias PhoneBook.Contacts.Contact
 
+  alias PhoneBookWeb.ContentPolicy
+
   action_fallback PhoneBookWeb.ApiFallbackController
 
   def index(conn, _params) do
@@ -25,29 +27,26 @@ defmodule PhoneBookWeb.ContactController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = conn.assigns.current_user
+    contact = Contacts.get_contact!(id)
 
-    with contact <- Contacts.get_contact!(id),
-         true <- user.id == contact.user_id do
+    with :ok <- Bodyguard.permit(ContentPolicy, :contact_policy, conn, contact) do
       render(conn, "show.json", contact: contact)
     end
   end
 
   def update(conn, %{"id" => id, "contact" => contact_params}) do
-    user = conn.assigns.current_user
     contact = Contacts.get_contact!(id)
 
-    with true <- user.id == contact.user_id,
+    with :ok <- Bodyguard.permit(ContentPolicy, :contact_policy, conn, contact),
          {:ok, %Contact{} = contact} <- Contacts.update_contact(contact, contact_params) do
       render(conn, "show.json", contact: contact)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    user = conn.assigns.current_user
     contact = Contacts.get_contact!(id)
 
-    with true <- user.id == contact.user_id,
+    with :ok <- Bodyguard.permit(ContentPolicy, :contact_policy, conn, contact),
          {:ok, %Contact{}} <- Contacts.delete_contact(contact) do
       send_resp(conn, :no_content, "")
     end

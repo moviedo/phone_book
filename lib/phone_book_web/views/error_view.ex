@@ -7,6 +7,10 @@ defmodule PhoneBookWeb.ErrorView do
   #   "Internal Server Error"
   # end
 
+  def render("403.json", _assigns) do
+    %{"errors" => ["Forbidden"]}
+  end
+
   def render("401.json", _assigns) do
     %{"errors" => ["Unauthorized"]}
   end
