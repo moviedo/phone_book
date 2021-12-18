@@ -12,6 +12,7 @@ install_deps:
 	@docker run \
 	-v "/$$(pwd)":/app \
 	-w /app \
+	--rm \
 	elixir:1.13-alpine \
 	sh -c "mix local.hex --force && mix deps.get"
 
@@ -32,6 +33,7 @@ new_project:
 	@docker run \
 	-v "/$$(pwd)":/app \
 	-w /app \
+	--rm \
 	elixir:1.13-alpine \
 	sh -c "mix local.hex --force && mix archive.install hex phx_new --force && mix phx.new ${APP} --install --binary-id"
 
