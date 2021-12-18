@@ -12,7 +12,7 @@ install_deps:
 	@docker run \
 	-v "/$$(pwd)":/app \
 	-w /app \
-	elixir:1.12-alpine \
+	elixir:1.13-alpine \
 	sh -c "mix local.hex --force && mix deps.get"
 
 ## Checks linting on elixir files with formatter
@@ -32,7 +32,7 @@ new_project:
 	@docker run \
 	-v "/$$(pwd)":/app \
 	-w /app \
-	elixir:1.12-alpine \
+	elixir:1.13-alpine \
 	sh -c "mix local.hex --force && mix archive.install hex phx_new --force && mix phx.new ${APP} --install --binary-id"
 
 ## project release and tag using conventional commit
