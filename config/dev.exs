@@ -92,8 +92,7 @@ config :git_hooks,
     ],
     pre_commit: [
       tasks: [
-        {:mix_task, :format, ["--check-formatted"]},
-        {:mix_task, :credo, ["--strict"]}
+        {:file, "./priv/githooks/pre_commit.sh"}
       ]
     ]
   ]
