@@ -53,6 +53,7 @@ defmodule PhoneBook.MixProject do
       # Dev/Test dependencies
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:faker, "~> 0.17", only: [:dev, :test]},
       {:floki, ">= 0.30.0", only: :test},
       {:git_hooks, "~> 0.6.4", only: :dev, runtime: false},
       {:git_ops, "~> 2.4.5", only: :dev},

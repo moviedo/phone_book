@@ -51,6 +51,10 @@ start_docker:
 	docker-compose run web mix ecto.setup && \
 	docker-compose -f docker-compose.yml up -d --remove-orphans 
 
+## seed development database
+seed:
+	@docker-compose run web mix run priv/repo/seeds.exs
+
 ## start development environment with docker-compose
 start: 
 	- @make install_deps

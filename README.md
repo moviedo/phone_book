@@ -3,13 +3,12 @@
 ## Pre-requistes
 Install [make](https://formulae.brew.sh/formula/make#default) and [docker desktop](https://www.docker.com/products/docker-desktop).
 
-make 3.82
-  1. Optional instructions
+Optional instructions to install make 3.82
   1. Install through [brew](https://brew.sh/)
   1. Install make, `brew install make`
 
 ## Setup
-To start your Phoenix server run the command `make start`.
+To start your Phoenix server run the command `make start` and you can optionally seed the database with `make seed` (check priv/repo/seeds.exs file for data).
 
 This commands runs the following:
   * Install dependencies with `mix deps.get`
