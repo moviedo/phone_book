@@ -25,6 +25,7 @@ config :phone_book, PhoneBookWeb.Endpoint,
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     node: [
       "node_modules/webpack/bin/webpack.js",
+      "--watch",
       "--mode",
       "development",
       "--watch-options-stdin",
