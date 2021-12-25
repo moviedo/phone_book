@@ -86,7 +86,7 @@ defmodule PhoneBookWeb.Router do
   scope "/", PhoneBookWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    get "/phonebook", VueController, :index
+    get "/phonebook/*_path", VueController, :index
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
