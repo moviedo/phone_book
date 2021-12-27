@@ -7,14 +7,9 @@
 
 ## -- Phoenix Targets --
 
-## install phoenix package dependencies
-install_deps: 
-	@docker run \
-	-v "/$$(pwd)":/app \
-	-w /app \
-	--rm \
-	elixir:1.13-alpine \
-	sh -c "mix local.hex --force && mix deps.get"
+## install js dependencies for vue app
+install_js_deps: 
+	@docker-compose exec web sh -c "cd /app/vue_app/ && npm i"
 
 ## Checks linting on elixir files with formatter
 lint: 
@@ -39,7 +34,7 @@ new_project:
 
 ## project release and tag using conventional commit
 release:
-	@docker-compose run web mix git_ops.release
+	@docker-compose exec web mix git_ops.release
 
 ## restart web container so phoenix server can rebuild/restart
 restart:
@@ -48,17 +43,17 @@ restart:
 ## start docker-compose containers
 start_docker:
 	@docker-compose down && \
-	docker-compose run web mix ecto.setup && \
+	docker-compose run --rm web mix setup.dev && \
 	docker-compose -f docker-compose.yml up -d --remove-orphans 
 
 ## seed development database
 seed:
-	@docker-compose run web mix run priv/repo/seeds.exs
+	@docker-compose exec web mix run priv/repo/seeds.exs
 
 ## start development environment with docker-compose
 start: 
-	- @make install_deps
-	make start_docker
+	- @make start_docker
+	make install_js_deps
 
 ## stop development environment with docker-compose
 stop: 

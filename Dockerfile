@@ -15,10 +15,7 @@ RUN apk update && apk add inotify-tools \
     inotify-tools \
     && rm -rf /var/lib/apt/lists/*
 
-RUN apk update && apk add git build-base nodejs-current=~16 npm
-
-# Install npm deps
-RUN npm i
+RUN apk update && apk add git build-base nodejs npm
 
 # When this image is run, make /app the current working directory
 WORKDIR /app
