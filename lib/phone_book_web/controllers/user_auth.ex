@@ -168,5 +168,5 @@ defmodule PhoneBookWeb.UserAuth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(conn), do: Routes.vue_path(conn, :index)
+  defp signed_in_path(conn), do: Routes.vue_path(conn, :index, [])
 end

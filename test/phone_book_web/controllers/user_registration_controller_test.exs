@@ -15,7 +15,7 @@ defmodule PhoneBookWeb.UserRegistrationControllerTest do
 
     test "redirects if already logged in", %{conn: conn} do
       conn = conn |> log_in_user(user_fixture()) |> get(Routes.user_registration_path(conn, :new))
-      assert redirected_to(conn) == Routes.vue_path(conn, :index)
+      assert redirected_to(conn) == Routes.vue_path(conn, :index, [])
     end
   end
 
@@ -30,7 +30,7 @@ defmodule PhoneBookWeb.UserRegistrationControllerTest do
         })
 
       assert get_session(conn, :user_token)
-      assert redirected_to(conn) == Routes.vue_path(conn, :index)
+      assert redirected_to(conn) == Routes.vue_path(conn, :index, [])
 
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
