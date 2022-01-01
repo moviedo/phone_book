@@ -40,20 +40,20 @@ release:
 restart:
 	@docker-compose restart web
 
-## start docker-compose containers
-start_docker:
-	@docker-compose down && \
-	docker-compose run --rm web mix setup.dev && \
-	docker-compose -f docker-compose.yml up -d --remove-orphans 
-
 ## seed development database
 seed:
 	@docker-compose exec web mix run priv/repo/seeds.exs
 
+## setup initial development evvironment
+setup:
+	@docker-compose run --rm web sh -c "cd /app/vue_app/ && npm i" && \
+	docker-compose run --rm web mix setup && \
+	- @make start
+
 ## start development environment with docker-compose
 start: 
-	- @make start_docker
-	make install_js_deps
+	@docker-compose down && \
+	docker-compose -f docker-compose.yml up -d --remove-orphans
 
 ## stop development environment with docker-compose
 stop: 

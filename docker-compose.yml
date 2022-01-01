@@ -20,6 +20,7 @@ services:
     build: .
     container_name: phone_book_web
     command: mix phx.server
+    restart: always
     environment:
       MIX_ENV: dev
       PORT: 4000
